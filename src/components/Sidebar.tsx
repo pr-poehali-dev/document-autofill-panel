@@ -95,50 +95,6 @@ const Sidebar = ({
       </div>
 
       <div className="flex-1 overflow-hidden flex flex-col">
-        <div className="px-6 py-4 border-b border-sidebar-border">
-          <h3 className="font-medium text-sm text-muted-foreground mb-3">Документы на выгрузку</h3>
-          <div className="space-y-3">
-            <div className="flex items-center space-x-2">
-              <Checkbox 
-                id="warehouse" 
-                checked={warehouseReceipt}
-                onCheckedChange={(checked) => setWarehouseReceipt(checked as boolean)}
-              />
-              <label htmlFor="warehouse" className="text-sm cursor-pointer select-none">
-                Складская квитанция
-              </label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox 
-                id="smr" 
-                checked={smr}
-                onCheckedChange={(checked) => handleSmrChange(checked as boolean)}
-              />
-              <label htmlFor="smr" className="text-sm cursor-pointer select-none">
-                СМР
-              </label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox 
-                id="ttn" 
-                checked={ttn}
-                onCheckedChange={(checked) => handleTtnChange(checked as boolean)}
-              />
-              <label htmlFor="ttn" className="text-sm cursor-pointer select-none">
-                ТТН
-              </label>
-            </div>
-          </div>
-          
-          <Button 
-            onClick={handleExport}
-            className="w-full mt-4 bg-primary hover:bg-primary/90 text-white"
-          >
-            <Icon name="Download" size={18} className="mr-2" />
-            Выгрузить
-          </Button>
-        </div>
-
         <ScrollArea className="flex-1 px-6">
           <div className="py-4 space-y-2">
             <h3 className="font-medium text-sm text-muted-foreground mb-3">Загруженные файлы</h3>
@@ -177,6 +133,51 @@ const Sidebar = ({
             )}
           </div>
         </ScrollArea>
+
+        <div className="px-6 py-4 border-t border-sidebar-border">
+          <h3 className="font-medium text-sm text-muted-foreground mb-3">Документы на выгрузку</h3>
+          <div className="space-y-3">
+            <div className="flex items-center space-x-2">
+              <Checkbox 
+                id="warehouse" 
+                checked={warehouseReceipt}
+                onCheckedChange={(checked) => setWarehouseReceipt(checked as boolean)}
+              />
+              <label htmlFor="warehouse" className="text-sm cursor-pointer select-none">
+                Складская квитанция
+              </label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox 
+                id="smr" 
+                checked={smr}
+                onCheckedChange={(checked) => handleSmrChange(checked as boolean)}
+              />
+              <label htmlFor="smr" className="text-sm cursor-pointer select-none">
+                СМР
+              </label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox 
+                id="ttn" 
+                checked={ttn}
+                onCheckedChange={(checked) => handleTtnChange(checked as boolean)}
+              />
+              <label htmlFor="ttn" className="text-sm cursor-pointer select-none">
+                ТТН
+              </label>
+            </div>
+          </div>
+          
+          <Button 
+            onClick={handleExport}
+            disabled={documents.length === 0}
+            className="w-full mt-4 bg-primary hover:bg-primary/90 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <Icon name="Download" size={18} className="mr-2" />
+            Выгрузить
+          </Button>
+        </div>
       </div>
     </div>
   );
