@@ -52,7 +52,7 @@ const Sidebar = ({
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="flex items-center gap-2 hover:bg-primary/10 px-3 py-2">
                 <Icon name="ChevronDown" size={16} className="text-muted-foreground" />
-                <span className="text-sm font-medium text-foreground">Иван Иванов</span>
+                <span className="text-sm font-medium text-foreground">Экспедитор</span>
                 <Icon name="User" size={18} className="text-primary" />
               </Button>
             </DropdownMenuTrigger>
