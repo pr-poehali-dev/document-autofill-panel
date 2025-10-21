@@ -110,12 +110,13 @@ const Index = () => {
         <div className="absolute inset-0 bg-primary/60" />
         
         <Card className="relative z-10 w-full max-w-md p-8 space-y-6 shadow-2xl">
-          <div className="flex justify-center mb-6">
+          <div className="flex flex-col items-center mb-6">
             <img 
               src="https://cdn.poehali.dev/files/c5fd7ec7-0659-498e-877f-d8d371e9af52.png" 
               alt="DocFlow Logo" 
               className="h-32 w-32 object-contain"
             />
+            <h1 className="text-3xl font-bold text-primary mt-2">DocFlow</h1>
           </div>
           
           <form onSubmit={handleLogin} className="space-y-4">
