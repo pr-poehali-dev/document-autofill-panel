@@ -133,7 +133,7 @@ const Index = () => {
       </div>
 
       <div className="w-96 bg-sidebar border-l border-sidebar-border shadow-2xl flex flex-col">
-        <div className="p-6 border-b border-sidebar-border space-y-3">
+        <div className="p-6 border-b border-sidebar-border space-y-4">
           <h2 className="text-lg font-semibold text-primary mb-4">Управление</h2>
           
           <Button 
