@@ -4,6 +4,7 @@ import { Card } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -25,6 +26,8 @@ const Index = () => {
   const [ttn, setTtn] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [showShareMenu, setShowShareMenu] = useState(false);
+  const [isSubscriptionOpen, setIsSubscriptionOpen] = useState(false);
+  const [remainingDocuments] = useState(47);
 
   const handleSmrChange = (checked: boolean) => {
     setSmr(checked);
@@ -76,6 +79,15 @@ const Index = () => {
   const handleShareSocial = (platform: string) => {
     toast.success(`Поделиться в ${platform}`);
     setShowShareMenu(false);
+  };
+
+  const handleLogout = () => {
+    toast.success('Выход из аккаунта');
+  };
+
+  const handleSubscribe = (plan: string) => {
+    toast.success(`Подписка "${plan}" оформлена`);
+    setIsSubscriptionOpen(false);
   };
 
   return (
@@ -134,6 +146,27 @@ const Index = () => {
 
       <div className="w-96 bg-sidebar border-l border-sidebar-border shadow-2xl flex flex-col">
         <div className="p-6 border-b border-sidebar-border space-y-4">
+          <div className="flex items-center justify-between mb-2">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="flex items-center gap-2 hover:bg-primary/10 px-3 py-2">
+                  <Icon name="User" size={18} className="text-primary" />
+                  <span className="text-sm font-medium text-foreground">Иван Иванов</span>
+                  <Icon name="ChevronDown" size={16} className="text-muted-foreground" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuItem onClick={() => setIsSubscriptionOpen(true)} className="cursor-pointer">
+                  <Icon name="CreditCard" size={16} className="mr-2" />
+                  Подписка
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-destructive">
+                  <Icon name="LogOut" size={16} className="mr-2" />
+                  Выйти
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
           <h2 className="text-lg font-semibold text-primary mb-4">Управление</h2>
           
           <Button 
@@ -414,6 +447,104 @@ const Index = () => {
                 <Icon name="Share2" size={18} className="mr-2" />
                 Отправить форму
               </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={isSubscriptionOpen} onOpenChange={setIsSubscriptionOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-primary">Подписка</DialogTitle>
+          </DialogHeader>
+          
+          <div className="space-y-6 py-4">
+            <div className="bg-accent/50 p-4 rounded-lg text-center">
+              <p className="text-sm text-muted-foreground mb-1">Осталось документов</p>
+              <p className="text-4xl font-bold text-primary">{remainingDocuments}</p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4">
+              <Card className="p-6 border-2 border-primary/20 hover:border-primary transition-all cursor-pointer hover:shadow-lg" onClick={() => handleSubscribe('Базовый')}>
+                <div className="flex items-start justify-between mb-4">
+                  <div>
+                    <h3 className="text-lg font-bold text-foreground">Базовый</h3>
+                    <p className="text-sm text-muted-foreground mt-1">Для начинающих</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-2xl font-bold text-primary">500₽</p>
+                    <p className="text-xs text-muted-foreground">в месяц</p>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <Icon name="Check" size={16} className="text-primary" />
+                    <span className="text-sm">+50 документов</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Icon name="Check" size={16} className="text-primary" />
+                    <span className="text-sm">Базовая поддержка</span>
+                  </div>
+                </div>
+              </Card>
+
+              <Card className="p-6 border-2 border-secondary hover:border-secondary transition-all cursor-pointer hover:shadow-lg bg-secondary/5" onClick={() => handleSubscribe('Стандартный')}>
+                <div className="flex items-start justify-between mb-4">
+                  <div>
+                    <h3 className="text-lg font-bold text-foreground">Стандартный</h3>
+                    <p className="text-sm text-muted-foreground mt-1">Популярный выбор</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-2xl font-bold text-secondary">1200₽</p>
+                    <p className="text-xs text-muted-foreground">в месяц</p>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <Icon name="Check" size={16} className="text-secondary" />
+                    <span className="text-sm">+150 документов</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Icon name="Check" size={16} className="text-secondary" />
+                    <span className="text-sm">Приоритетная поддержка</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Icon name="Check" size={16} className="text-secondary" />
+                    <span className="text-sm">Автозаполнение</span>
+                  </div>
+                </div>
+              </Card>
+
+              <Card className="p-6 border-2 border-primary hover:border-primary transition-all cursor-pointer hover:shadow-lg" onClick={() => handleSubscribe('Премиум')}>
+                <div className="flex items-start justify-between mb-4">
+                  <div>
+                    <h3 className="text-lg font-bold text-foreground">Премиум</h3>
+                    <p className="text-sm text-muted-foreground mt-1">Для профессионалов</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-2xl font-bold text-primary">2500₽</p>
+                    <p className="text-xs text-muted-foreground">в месяц</p>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <Icon name="Check" size={16} className="text-primary" />
+                    <span className="text-sm">Безлимитные документы</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Icon name="Check" size={16} className="text-primary" />
+                    <span className="text-sm">VIP поддержка 24/7</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Icon name="Check" size={16} className="text-primary" />
+                    <span className="text-sm">API доступ</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Icon name="Check" size={16} className="text-primary" />
+                    <span className="text-sm">Автозаполнение + шаблоны</span>
+                  </div>
+                </div>
+              </Card>
             </div>
           </div>
         </DialogContent>
