@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Checkbox } from '@/components/ui/checkbox';
 import Icon from '@/components/ui/icon';
 import { toast } from 'sonner';
 
@@ -15,6 +16,19 @@ interface Document {
 const Index = () => {
   const [documents, setDocuments] = useState<Document[]>([]);
   const [selectedDoc, setSelectedDoc] = useState<Document | null>(null);
+  const [warehouseReceipt, setWarehouseReceipt] = useState(false);
+  const [smr, setSmr] = useState(false);
+  const [ttn, setTtn] = useState(false);
+
+  const handleSmrChange = (checked: boolean) => {
+    setSmr(checked);
+    if (checked) setTtn(false);
+  };
+
+  const handleTtnChange = (checked: boolean) => {
+    setTtn(checked);
+    if (checked) setSmr(false);
+  };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -114,9 +128,55 @@ const Index = () => {
         </div>
 
         <div className="flex-1 overflow-hidden flex flex-col">
-          <div className="px-6 py-4 border-b border-sidebar-border">
-            <h3 className="text-sm font-semibold text-primary mb-1">Список документов</h3>
-            <p className="text-xs text-muted-foreground">Всего: {documents.length}</p>
+          <div className="px-6 py-4 border-b border-sidebar-border space-y-4">
+            <div>
+              <h3 className="text-sm font-semibold text-primary mb-1">Список документов</h3>
+              <p className="text-xs text-muted-foreground">Всего: {documents.length}</p>
+            </div>
+            
+            <div className="space-y-3">
+              <div className="flex items-center space-x-2">
+                <Checkbox 
+                  id="warehouse-receipt" 
+                  checked={warehouseReceipt}
+                  onCheckedChange={(checked) => setWarehouseReceipt(checked as boolean)}
+                />
+                <label
+                  htmlFor="warehouse-receipt"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                >
+                  Складская расписка
+                </label>
+              </div>
+              
+              <div className="flex items-center space-x-2">
+                <Checkbox 
+                  id="smr" 
+                  checked={smr}
+                  onCheckedChange={handleSmrChange}
+                />
+                <label
+                  htmlFor="smr"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                >
+                  СМР
+                </label>
+              </div>
+              
+              <div className="flex items-center space-x-2">
+                <Checkbox 
+                  id="ttn" 
+                  checked={ttn}
+                  onCheckedChange={handleTtnChange}
+                />
+                <label
+                  htmlFor="ttn"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                >
+                  ТТН
+                </label>
+              </div>
+            </div>
           </div>
           
           <ScrollArea className="flex-1 px-4">
