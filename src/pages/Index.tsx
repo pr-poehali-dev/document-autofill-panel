@@ -130,7 +130,7 @@ const Index = () => {
         <div className="flex-1 overflow-hidden flex flex-col">
           <div className="px-6 py-4 border-b border-sidebar-border space-y-4">
             <div>
-              <h3 className="text-sm font-semibold text-primary mb-1">Список документов</h3>
+              <h3 className="text-sm font-semibold text-primary mb-1">Список загруженных документов</h3>
               <p className="text-xs text-muted-foreground">Всего: {documents.length}</p>
             </div>
             
