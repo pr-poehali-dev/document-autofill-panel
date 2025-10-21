@@ -80,8 +80,8 @@ const SubscriptionDialog = ({
               </div>
               <div className="mt-4">
                 <div className="flex items-center gap-2">
-                  <Icon name="Infinity" size={16} className="text-primary" />
-                  <span className="text-sm font-medium">Безлимитные документы</span>
+                  <Icon name="FileText" size={16} className="text-primary" />
+                  <span className="text-sm font-medium">+500 документов</span>
                 </div>
               </div>
             </Card>

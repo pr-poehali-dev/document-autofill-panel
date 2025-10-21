@@ -30,7 +30,7 @@ const LoginPage = ({
       <Card className="relative z-10 w-full max-w-md p-8 space-y-6 shadow-2xl">
         <div className="flex flex-col items-center mb-6">
           <img 
-            src="https://cdn.poehali.dev/files/c5fd7ec7-0659-498e-877f-d8d371e9af52.png" 
+            src="https://cdn.poehali.dev/files/2f6053e1-1ab7-4827-ad0d-463d03d2dc40.png" 
             alt="DocFlow Logo" 
             className="h-32 w-32 object-contain"
           />
