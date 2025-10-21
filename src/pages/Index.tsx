@@ -3,6 +3,10 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import Icon from '@/components/ui/icon';
 import { toast } from 'sonner';
 
@@ -19,6 +23,8 @@ const Index = () => {
   const [warehouseReceipt, setWarehouseReceipt] = useState(false);
   const [smr, setSmr] = useState(false);
   const [ttn, setTtn] = useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [showShareMenu, setShowShareMenu] = useState(false);
 
   const handleSmrChange = (checked: boolean) => {
     setSmr(checked);
@@ -51,6 +57,25 @@ const Index = () => {
       return;
     }
     toast.success(`Документ "${selectedDoc.name}" выгружен`);
+  };
+
+  const handleDownloadForm = () => {
+    const link = document.createElement('a');
+    link.href = 'https://cdn.poehali.dev/files/7ee3d3a5-3eb1-4bd4-ac1b-80fd925f52aa.png';
+    link.download = 'transport-order-form.png';
+    link.click();
+    toast.success('Форма скачана');
+  };
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText('https://docflow.example.com/form/12345');
+    toast.success('Ссылка скопирована');
+    setShowShareMenu(false);
+  };
+
+  const handleShareSocial = (platform: string) => {
+    toast.success(`Поделиться в ${platform}`);
+    setShowShareMenu(false);
   };
 
   return (
@@ -108,8 +133,16 @@ const Index = () => {
       </div>
 
       <div className="w-96 bg-sidebar border-l border-sidebar-border shadow-2xl flex flex-col">
-        <div className="p-6 border-b border-sidebar-border">
+        <div className="p-6 border-b border-sidebar-border space-y-3">
           <h2 className="text-lg font-semibold text-primary mb-4">Управление</h2>
+          
+          <Button 
+            onClick={() => setIsFormOpen(true)}
+            className="w-full bg-secondary hover:bg-secondary/90 text-white shadow-lg hover:shadow-xl transition-all duration-200 group"
+          >
+            <Icon name="FileEdit" size={18} className="mr-2 group-hover:scale-110 transition-transform" />
+            Заполнить форму
+          </Button>
           
           <label htmlFor="file-upload">
             <input
@@ -232,6 +265,161 @@ const Index = () => {
           </Button>
         </div>
       </div>
+
+      <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-primary">Заявка на перевозку / Transport Order</DialogTitle>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="loading-date" className="text-sm font-medium">Дата и время загрузки / Loading date</Label>
+                <Input id="loading-date" type="date" className="mt-1" />
+              </div>
+              <div>
+                <Label htmlFor="route" className="text-sm font-medium">Маршрут перевозки / Route</Label>
+                <Input id="route" placeholder="Введите маршрут" className="mt-1" />
+              </div>
+            </div>
+
+            <div>
+              <Label htmlFor="truck-type" className="text-sm font-medium">Требуемый тип подвижного состава / Required truck type</Label>
+              <Input id="truck-type" placeholder="Тип транспорта" className="mt-1" />
+            </div>
+
+            <div className="bg-accent/30 p-3 rounded">
+              <Label className="text-sm font-semibold text-primary">Адрес загрузки это отправитель</Label>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="loading-address" className="text-sm font-medium">Контактное лицо / Loading address</Label>
+                <Input id="loading-address" placeholder="Адрес" className="mt-1" />
+              </div>
+              <div>
+                <Label htmlFor="reference" className="text-sm font-medium">Reference #</Label>
+                <Input id="reference" placeholder="Номер" className="mt-1" />
+              </div>
+            </div>
+
+            <div>
+              <Label htmlFor="person-in-charge" className="text-sm font-medium">Person in Charge</Label>
+              <Input id="person-in-charge" placeholder="Ответственное лицо" className="mt-1" />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="export-custom" className="text-sm font-medium">Таможня отправления / Export custom</Label>
+                <Input id="export-custom" placeholder="Таможня" className="mt-1" />
+              </div>
+              <div>
+                <Label htmlFor="import-custom" className="text-sm font-medium">Таможня назначения / Import custom</Label>
+                <Input id="import-custom" placeholder="Таможня" className="mt-1" />
+              </div>
+            </div>
+
+            <div>
+              <Label htmlFor="destination" className="text-sm font-medium">Адрес разгрузки / Place of unloading/destination</Label>
+              <Input id="destination" placeholder="Адрес разгрузки" className="mt-1" />
+            </div>
+
+            <div>
+              <Label htmlFor="cargo-type" className="text-sm font-medium">Груз (наименование, количество, масса брутто, класс опасности, упаковка, размеры) / Type of cargo</Label>
+              <Textarea id="cargo-type" placeholder="Описание груза" className="mt-1" rows={3} />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="packages" className="text-sm font-medium">Количество и число грузовых мест / Number of packages</Label>
+                <Input id="packages" placeholder="Количество" className="mt-1" />
+              </div>
+              <div>
+                <Label htmlFor="delivery-term" className="text-sm font-medium">Срок доставки / Term of delivery</Label>
+                <Input id="delivery-term" placeholder="Срок" className="mt-1" />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="additional" className="text-sm font-medium">Особые условия / Additional requirements</Label>
+                <Input id="additional" placeholder="Дополнительные требования" className="mt-1" />
+              </div>
+              <div>
+                <Label htmlFor="freight-rate" className="text-sm font-medium">Сумма фрахта / Freight's rate</Label>
+                <Input id="freight-rate" placeholder="Стоимость" className="mt-1" />
+              </div>
+            </div>
+          </div>
+
+          <div className="flex gap-3 pt-4 border-t">
+            <Button 
+              variant="outline" 
+              onClick={() => setIsFormOpen(false)}
+              className="flex-1"
+            >
+              <Icon name="X" size={18} className="mr-2" />
+              Закрыть
+            </Button>
+            
+            <Button 
+              variant="outline"
+              onClick={handleDownloadForm}
+              className="flex-1 border-primary text-primary hover:bg-primary/10"
+            >
+              <Icon name="Download" size={18} className="mr-2" />
+              Скачать форму
+            </Button>
+            
+            <div className="flex-1 relative">
+              {showShareMenu && (
+                <div className="absolute bottom-full mb-2 right-0 bg-white border border-sidebar-border rounded-lg shadow-lg p-2 space-y-1 z-10">
+                  <Button 
+                    variant="ghost" 
+                    className="w-full justify-start text-sm" 
+                    onClick={handleCopyLink}
+                  >
+                    <Icon name="Link" size={16} className="mr-2" />
+                    Копировать ссылку
+                  </Button>
+                  <Button 
+                    variant="ghost" 
+                    className="w-full justify-start text-sm" 
+                    onClick={() => handleShareSocial('Telegram')}
+                  >
+                    <Icon name="Send" size={16} className="mr-2" />
+                    Telegram
+                  </Button>
+                  <Button 
+                    variant="ghost" 
+                    className="w-full justify-start text-sm" 
+                    onClick={() => handleShareSocial('WhatsApp')}
+                  >
+                    <Icon name="MessageCircle" size={16} className="mr-2" />
+                    WhatsApp
+                  </Button>
+                  <Button 
+                    variant="ghost" 
+                    className="w-full justify-start text-sm" 
+                    onClick={() => handleShareSocial('Email')}
+                  >
+                    <Icon name="Mail" size={16} className="mr-2" />
+                    Email
+                  </Button>
+                </div>
+              )}
+              <Button 
+                className="w-full bg-primary hover:bg-primary/90 text-white"
+                onClick={() => setShowShareMenu(!showShareMenu)}
+              >
+                <Icon name="Share2" size={18} className="mr-2" />
+                Отправить форму
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
