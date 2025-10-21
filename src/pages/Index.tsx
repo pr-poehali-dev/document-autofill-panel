@@ -138,7 +138,7 @@ const Index = () => {
           
           <Button 
             onClick={() => setIsFormOpen(true)}
-            className="w-full bg-secondary hover:bg-secondary/90 text-white shadow-lg hover:shadow-xl transition-all duration-200 group"
+            className="w-full bg-secondary hover:bg-secondary/90 text-white shadow-lg hover:shadow-xl transition-all duration-200 group mb-3"
           >
             <Icon name="FileEdit" size={18} className="mr-2 group-hover:scale-110 transition-transform" />
             Заполнить форму
