@@ -161,55 +161,9 @@ const Index = () => {
         </div>
 
         <div className="flex-1 overflow-hidden flex flex-col">
-          <div className="px-6 py-4 border-b border-sidebar-border space-y-4">
-            <div>
-              <h3 className="text-sm font-semibold text-primary mb-1">Список загруженных документов</h3>
-              <p className="text-xs text-muted-foreground">Всего: {documents.length}</p>
-            </div>
-            
-            <div className="space-y-3">
-              <div className="flex items-center space-x-2">
-                <Checkbox 
-                  id="warehouse-receipt" 
-                  checked={warehouseReceipt}
-                  onCheckedChange={(checked) => setWarehouseReceipt(checked as boolean)}
-                />
-                <label
-                  htmlFor="warehouse-receipt"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                >
-                  Складская расписка
-                </label>
-              </div>
-              
-              <div className="flex items-center space-x-2">
-                <Checkbox 
-                  id="smr" 
-                  checked={smr}
-                  onCheckedChange={handleSmrChange}
-                />
-                <label
-                  htmlFor="smr"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                >
-                  СМР
-                </label>
-              </div>
-              
-              <div className="flex items-center space-x-2">
-                <Checkbox 
-                  id="ttn" 
-                  checked={ttn}
-                  onCheckedChange={handleTtnChange}
-                />
-                <label
-                  htmlFor="ttn"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                >
-                  ТТН
-                </label>
-              </div>
-            </div>
+          <div className="px-6 py-4 border-b border-sidebar-border">
+            <h3 className="text-sm font-semibold text-primary mb-1">Список загруженных документов</h3>
+            <p className="text-xs text-muted-foreground">Всего: {documents.length}</p>
           </div>
           
           <ScrollArea className="flex-1 px-4">
@@ -254,7 +208,51 @@ const Index = () => {
           </ScrollArea>
         </div>
 
-        <div className="p-6 border-t border-sidebar-border bg-white/50">
+        <div className="p-6 border-t border-sidebar-border bg-white/50 space-y-4">
+          <div className="space-y-3">
+            <div className="flex items-center space-x-2">
+              <Checkbox 
+                id="warehouse-receipt" 
+                checked={warehouseReceipt}
+                onCheckedChange={(checked) => setWarehouseReceipt(checked as boolean)}
+              />
+              <label
+                htmlFor="warehouse-receipt"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+              >
+                Складская расписка
+              </label>
+            </div>
+            
+            <div className="flex items-center space-x-2">
+              <Checkbox 
+                id="smr" 
+                checked={smr}
+                onCheckedChange={handleSmrChange}
+              />
+              <label
+                htmlFor="smr"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+              >
+                СМР
+              </label>
+            </div>
+            
+            <div className="flex items-center space-x-2">
+              <Checkbox 
+                id="ttn" 
+                checked={ttn}
+                onCheckedChange={handleTtnChange}
+              />
+              <label
+                htmlFor="ttn"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+              >
+                ТТН
+              </label>
+            </div>
+          </div>
+          
           <Button
             onClick={handleExport}
             disabled={!selectedDoc}
