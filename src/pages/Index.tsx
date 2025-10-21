@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import LoginPage from '@/components/LoginPage';
 import DocumentPreview from '@/components/DocumentPreview';
@@ -14,7 +14,10 @@ interface Document {
 }
 
 const Index = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    const saved = localStorage.getItem('docflow_logged_in');
+    return saved === 'true';
+  });
   const [documents, setDocuments] = useState<Document[]>([]);
   const [selectedDoc, setSelectedDoc] = useState<Document | null>(null);
   const [warehouseReceipt, setWarehouseReceipt] = useState(false);
@@ -81,12 +84,14 @@ const Index = () => {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+    localStorage.removeItem('docflow_logged_in');
     toast.success('Выход из аккаунта');
   };
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoggedIn(true);
+    localStorage.setItem('docflow_logged_in', 'true');
     toast.success('Добро пожаловать!');
   };
 
