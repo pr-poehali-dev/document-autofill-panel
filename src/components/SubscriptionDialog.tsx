@@ -43,7 +43,7 @@ const SubscriptionDialog = ({
               <div className="mt-4">
                 <div className="flex items-center gap-2">
                   <Icon name="FileText" size={16} className="text-primary" />
-                  <span className="text-sm font-medium">+50 документов</span>
+                  <span className="text-sm font-medium">+100 документов</span>
                 </div>
               </div>
             </Card>
@@ -62,7 +62,7 @@ const SubscriptionDialog = ({
               <div className="mt-4">
                 <div className="flex items-center gap-2">
                   <Icon name="FileText" size={16} className="text-secondary" />
-                  <span className="text-sm font-medium">+150 документов</span>
+                  <span className="text-sm font-medium">+300 документов</span>
                 </div>
               </div>
             </Card>
