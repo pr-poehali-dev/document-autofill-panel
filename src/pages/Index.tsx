@@ -19,6 +19,7 @@ interface Document {
 }
 
 const Index = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [documents, setDocuments] = useState<Document[]>([]);
   const [selectedDoc, setSelectedDoc] = useState<Document | null>(null);
   const [warehouseReceipt, setWarehouseReceipt] = useState(false);
@@ -28,6 +29,8 @@ const Index = () => {
   const [showShareMenu, setShowShareMenu] = useState(false);
   const [isSubscriptionOpen, setIsSubscriptionOpen] = useState(false);
   const [remainingDocuments] = useState(47);
+  const [loginEmail, setLoginEmail] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
 
   const handleSmrChange = (checked: boolean) => {
     setSmr(checked);
@@ -82,13 +85,91 @@ const Index = () => {
   };
 
   const handleLogout = () => {
+    setIsLoggedIn(false);
     toast.success('Выход из аккаунта');
+  };
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoggedIn(true);
+    toast.success('Добро пожаловать!');
   };
 
   const handleSubscribe = (plan: string) => {
     toast.success(`Подписка "${plan}" оформлена`);
     setIsSubscriptionOpen(false);
   };
+
+  if (!isLoggedIn) {
+    return (
+      <div className="min-h-screen relative flex items-center justify-center">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: 'url(https://cdn.poehali.dev/projects/15e8d7ed-2cfe-4c80-8e2d-8aa4ca31fc13/files/cf9dfade-5061-4363-826b-3c0fc0e44bc1.jpg)' }}
+        />
+        <div className="absolute inset-0 bg-primary/60" />
+        
+        <Card className="relative z-10 w-full max-w-md p-8 space-y-6 shadow-2xl">
+          <div className="flex justify-center mb-6">
+            <img 
+              src="https://cdn.poehali.dev/files/c5fd7ec7-0659-498e-877f-d8d371e9af52.png" 
+              alt="DocFlow Logo" 
+              className="h-32 w-32 object-contain"
+            />
+          </div>
+          
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <Label htmlFor="email" className="text-sm font-medium">Логин</Label>
+              <Input 
+                id="email" 
+                type="email" 
+                placeholder="email@example.com"
+                value={loginEmail}
+                onChange={(e) => setLoginEmail(e.target.value)}
+                className="mt-1"
+                required
+              />
+            </div>
+            
+            <div>
+              <Label htmlFor="password" className="text-sm font-medium">Пароль</Label>
+              <Input 
+                id="password" 
+                type="password" 
+                placeholder="••••••••"
+                value={loginPassword}
+                onChange={(e) => setLoginPassword(e.target.value)}
+                className="mt-1"
+                required
+              />
+            </div>
+            
+            <button 
+              type="button"
+              className="text-sm text-primary hover:underline"
+              onClick={() => toast.info('Функция восстановления пароля')}
+            >
+              Восстановление пароля
+            </button>
+            
+            <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-white">
+              Войти
+            </Button>
+            
+            <Button 
+              type="button"
+              variant="outline" 
+              className="w-full"
+              onClick={() => toast.info('Функция создания аккаунта')}
+            >
+              Создать аккаунт
+            </Button>
+          </form>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-screen bg-gradient-to-br from-background to-accent/20">
@@ -146,13 +227,13 @@ const Index = () => {
 
       <div className="w-96 bg-sidebar border-l border-sidebar-border shadow-2xl flex flex-col">
         <div className="p-6 border-b border-sidebar-border space-y-4">
-          <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center justify-end mb-2">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="flex items-center gap-2 hover:bg-primary/10 px-3 py-2">
-                  <Icon name="User" size={18} className="text-primary" />
-                  <span className="text-sm font-medium text-foreground">Иван Иванов</span>
                   <Icon name="ChevronDown" size={16} className="text-muted-foreground" />
+                  <span className="text-sm font-medium text-foreground">Иван Иванов</span>
+                  <Icon name="User" size={18} className="text-primary" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">
@@ -466,7 +547,7 @@ const Index = () => {
 
             <div className="grid grid-cols-1 gap-4">
               <Card className="p-6 border-2 border-primary/20 hover:border-primary transition-all cursor-pointer hover:shadow-lg" onClick={() => handleSubscribe('Базовый')}>
-                <div className="flex items-start justify-between mb-4">
+                <div className="flex items-start justify-between">
                   <div>
                     <h3 className="text-lg font-bold text-foreground">Базовый</h3>
                     <p className="text-sm text-muted-foreground mt-1">Для начинающих</p>
@@ -476,20 +557,16 @@ const Index = () => {
                     <p className="text-xs text-muted-foreground">в месяц</p>
                   </div>
                 </div>
-                <div className="space-y-2">
+                <div className="mt-4">
                   <div className="flex items-center gap-2">
-                    <Icon name="Check" size={16} className="text-primary" />
-                    <span className="text-sm">+50 документов</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Icon name="Check" size={16} className="text-primary" />
-                    <span className="text-sm">Базовая поддержка</span>
+                    <Icon name="FileText" size={16} className="text-primary" />
+                    <span className="text-sm font-medium">+50 документов</span>
                   </div>
                 </div>
               </Card>
 
               <Card className="p-6 border-2 border-secondary hover:border-secondary transition-all cursor-pointer hover:shadow-lg bg-secondary/5" onClick={() => handleSubscribe('Стандартный')}>
-                <div className="flex items-start justify-between mb-4">
+                <div className="flex items-start justify-between">
                   <div>
                     <h3 className="text-lg font-bold text-foreground">Стандартный</h3>
                     <p className="text-sm text-muted-foreground mt-1">Популярный выбор</p>
@@ -499,24 +576,16 @@ const Index = () => {
                     <p className="text-xs text-muted-foreground">в месяц</p>
                   </div>
                 </div>
-                <div className="space-y-2">
+                <div className="mt-4">
                   <div className="flex items-center gap-2">
-                    <Icon name="Check" size={16} className="text-secondary" />
-                    <span className="text-sm">+150 документов</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Icon name="Check" size={16} className="text-secondary" />
-                    <span className="text-sm">Приоритетная поддержка</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Icon name="Check" size={16} className="text-secondary" />
-                    <span className="text-sm">Автозаполнение</span>
+                    <Icon name="FileText" size={16} className="text-secondary" />
+                    <span className="text-sm font-medium">+150 документов</span>
                   </div>
                 </div>
               </Card>
 
               <Card className="p-6 border-2 border-primary hover:border-primary transition-all cursor-pointer hover:shadow-lg" onClick={() => handleSubscribe('Премиум')}>
-                <div className="flex items-start justify-between mb-4">
+                <div className="flex items-start justify-between">
                   <div>
                     <h3 className="text-lg font-bold text-foreground">Премиум</h3>
                     <p className="text-sm text-muted-foreground mt-1">Для профессионалов</p>
@@ -526,22 +595,10 @@ const Index = () => {
                     <p className="text-xs text-muted-foreground">в месяц</p>
                   </div>
                 </div>
-                <div className="space-y-2">
+                <div className="mt-4">
                   <div className="flex items-center gap-2">
-                    <Icon name="Check" size={16} className="text-primary" />
-                    <span className="text-sm">Безлимитные документы</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Icon name="Check" size={16} className="text-primary" />
-                    <span className="text-sm">VIP поддержка 24/7</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Icon name="Check" size={16} className="text-primary" />
-                    <span className="text-sm">API доступ</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Icon name="Check" size={16} className="text-primary" />
-                    <span className="text-sm">Автозаполнение + шаблоны</span>
+                    <Icon name="Infinity" size={16} className="text-primary" />
+                    <span className="text-sm font-medium">Безлимитные документы</span>
                   </div>
                 </div>
               </Card>
