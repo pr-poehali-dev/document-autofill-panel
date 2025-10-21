@@ -36,7 +36,7 @@ const SubscriptionDialog = ({
                   <p className="text-sm text-muted-foreground mt-1">Для начинающих</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-2xl font-bold text-primary">10000₽</p>
+                  <p className="text-2xl font-bold text-primary">10 000₽</p>
                   <p className="text-xs text-muted-foreground">в месяц</p>
                 </div>
               </div>
@@ -55,7 +55,7 @@ const SubscriptionDialog = ({
                   <p className="text-sm text-muted-foreground mt-1">Популярный выбор</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-2xl font-bold text-secondary">27000₽</p>
+                  <p className="text-2xl font-bold text-secondary">27 000₽</p>
                   <p className="text-xs text-muted-foreground">в месяц</p>
                 </div>
               </div>
@@ -74,7 +74,7 @@ const SubscriptionDialog = ({
                   <p className="text-sm text-muted-foreground mt-1">Для профессионалов</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-2xl font-bold text-primary">2500₽</p>
+                  <p className="text-2xl font-bold text-primary">45 000₽</p>
                   <p className="text-xs text-muted-foreground">в месяц</p>
                 </div>
               </div>
