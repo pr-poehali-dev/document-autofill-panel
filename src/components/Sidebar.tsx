@@ -100,7 +100,7 @@ const Sidebar = ({
             <h3 className="font-medium text-sm text-muted-foreground mb-3">Загруженные файлы</h3>
             {documents.length === 0 ? (
               <div className="flex flex-col items-center py-8">
-                <Icon name="FileX" size={48} className="text-muted-foreground/40 mb-3" />
+                <Icon name="Package" size={48} className="text-muted-foreground/40 mb-3" />
                 <p className="text-sm text-muted-foreground text-center">
                   Нет загруженных документов
                 </p>
