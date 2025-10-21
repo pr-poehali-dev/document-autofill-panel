@@ -43,8 +43,8 @@ const Index = () => {
     <div className="flex h-screen bg-gradient-to-br from-background to-accent/20">
       <div className="flex-1 p-6 flex flex-col">
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-primary mb-2">АвтоДок</h1>
-          <p className="text-muted-foreground">Сервис автозаполнения документов</p>
+          <h1 className="text-3xl font-bold text-primary mb-2">DocFlow</h1>
+          <p className="text-muted-foreground">Автозаполнение транспортных накладных</p>
         </div>
 
         <Card className="flex-1 bg-white shadow-xl border-0 overflow-hidden animate-fade-in">
