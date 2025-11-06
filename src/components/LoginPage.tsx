@@ -34,7 +34,7 @@ const LoginPage = ({
             alt="DocFlow Logo" 
             className="h-32 w-32 object-contain"
           />
-          <h1 className="text-3xl font-bold text-primary mt-2">DocFlow</h1>
+          <h1 className="text-3xl font-bold text-primary mt-2">Название без АП</h1>
         </div>
         
         <form onSubmit={onLogin} className="space-y-4">
