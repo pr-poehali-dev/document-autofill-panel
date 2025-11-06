@@ -116,7 +116,7 @@ const Index = () => {
     <div className="flex h-screen bg-gradient-to-br from-background to-accent/20">
       <div className="flex-1 p-6 flex flex-col">
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-primary mb-2">DocFlow</h1>
+          <h1 className="text-3xl font-bold text-primary mb-2">Название без АП</h1>
           <p className="text-muted-foreground">Автозаполнение транспортных накладных</p>
         </div>
 
